@@ -3,6 +3,34 @@ import numpy as np
 from drl_lib.do_not_touch.mdp_env_wrapper import Env1
 from drl_lib.do_not_touch.result_structures import ValueFunction, PolicyAndValueFunction
 
+S_Line_World = [0, 1, 2, 3, 4]
+A_Line_World = [0, 1]  # Gauche, Droite
+R_Line_World = [-1.0, 0.0, 1.0]
+
+
+def p_line_world(s, a, s_p, r):
+    assert (0 <= s <= 4)
+    assert (0 <= s_p <= 4)
+    assert (0 <= a <= 1)
+    assert (0 <= r <= 2)
+    if s == 0 or s == 4:
+        return 0.0
+    if s + 1 == s_p and a == 1 and r == 1 and s != 3:
+        return 1.0
+    if s + 1 == s_p and a == 1 and r == 2 and s == 3:
+        return 1.0
+    if s - 1 == s_p and a == 0 and r == 1 and s != 1:
+        return 1.0
+    if s - 1 == s_p and a == 0 and r == 0 and s == 1:
+        return 1.0
+    return 0.0
+
+
+def pi_random_line_world(s, a):
+    if s == 0 or s == 6:
+        return 0.0
+    return 0.5
+
 
 def policy_evaluation_on_line_world(S, A, R, p, pi, theta: float = 0.0000001) -> ValueFunction:
     """
@@ -179,9 +207,19 @@ def value_iteration_on_secret_env1() -> PolicyAndValueFunction:
 
 
 def demo():
-    print(policy_evaluation_on_line_world())
-    print(policy_iteration_on_line_world())
-    print(value_iteration_on_line_world())
+    print(policy_evaluation_on_line_world(S_Line_World,
+                                          A_Line_World,
+                                          R_Line_World,
+                                          p_line_world,
+                                          pi_random_line_world))
+    print(policy_iteration_on_line_world(S_Line_World,
+                                         A_Line_World,
+                                         R_Line_World,
+                                         p_line_world))
+    print(value_iteration_on_line_world(S_Line_World,
+                                        A_Line_World,
+                                        R_Line_World,
+                                        p_line_world))
 
     print(policy_evaluation_on_grid_world())
     print(policy_iteration_on_grid_world())
