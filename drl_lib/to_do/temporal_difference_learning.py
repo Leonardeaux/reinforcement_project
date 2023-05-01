@@ -1,5 +1,5 @@
-from ..do_not_touch.result_structures import PolicyAndActionValueFunction
-from ..do_not_touch.single_agent_env_wrapper import Env3
+from drl_lib.do_not_touch.result_structures import PolicyAndActionValueFunction
+from drl_lib.do_not_touch.single_agent_env_wrapper import Env3
 
 
 def sarsa_on_tic_tac_toe_solo() -> PolicyAndActionValueFunction:

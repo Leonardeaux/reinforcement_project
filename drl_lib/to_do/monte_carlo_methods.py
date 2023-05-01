@@ -1,18 +1,24 @@
-from ..do_not_touch.result_structures import PolicyAndActionValueFunction
-from ..do_not_touch.single_agent_env_wrapper import Env2
+from drl_lib.do_not_touch.result_structures import PolicyAndActionValueFunction
+from drl_lib.do_not_touch.single_agent_env_wrapper import Env2
+from TicTacToe import TicTacToe
 
 
-def monte_carlo_es_on_tic_tac_toe_solo() -> PolicyAndActionValueFunction:
+def monte_carlo_es_on_tic_tac_toe_solo(env: TicTacToe,
+                                       gamma: float = 0.999999,
+                                       max_episodes_count: int = 1000) -> PolicyAndActionValueFunction:
     """
     Creates a TicTacToe Solo environment (Single player versus Uniform Random Opponent)
     Launches a Monte Carlo ES (Exploring Starts) in order to find the optimal Policy and its action-value function
     Returns the Optimal Policy (Pi(s,a)) and its Action-Value function (Q(s,a))
     """
-    # TODO
+
     pass
 
 
-def on_policy_first_visit_monte_carlo_control_on_tic_tac_toe_solo() -> PolicyAndActionValueFunction:
+def on_policy_first_visit_monte_carlo_control_on_tic_tac_toe_solo(env: TicTacToe,
+                                                                  gamma: float = 0.999999,
+                                                                  epsilon: float = 0.2,
+                                                                  max_episodes_count: int = 1000) -> PolicyAndActionValueFunction:
     """
     Creates a TicTacToe Solo environment (Single player versus Uniform Random Opponent)
     Launches an On Policy First Visit Monte Carlo Control algorithm in order to find the optimal epsilon-greedy Policy
@@ -20,7 +26,7 @@ def on_policy_first_visit_monte_carlo_control_on_tic_tac_toe_solo() -> PolicyAnd
     Returns the Optimal epsilon-greedy Policy (Pi(s,a)) and its Action-Value function (Q(s,a))
     Experiment with different values of hyper parameters and choose the most appropriate combination
     """
-    # TODO
+    assert (epsilon > 0)
     pass
 
 

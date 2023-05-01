@@ -31,6 +31,12 @@ class TicTacToe:
     def get_moves(self):
         return self.moves
 
+    def get_action_space(self):
+        pass
+
+    def get_state_space(self):
+        pass
+
     def make_move(self, row, col):
         if self.board[row][col] == 0:
             self.board[row][col] = self.player
