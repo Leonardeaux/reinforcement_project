@@ -73,8 +73,8 @@ def p_grid_world(s, a, s_p, r):
         return 0.0
     if s - 5 == s_p and a != 0:
         return 0.0
-    if r == 1:
-        return 1.0
+    # if r == 1: # ça qui foire
+    #     return 1.0
     return 0.0
 
 
