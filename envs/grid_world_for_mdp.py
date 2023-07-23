@@ -19,18 +19,20 @@ class GridWorldEnv(MDPEnv):
         for i in range(self.rows):
             for j in range(self.cols):
                 if (i, j) != self.win_coords and (i, j) != self.loose_coords:
-                    if i > 0:    # Up
-                        self.p_matrix[i * self.cols + j, 0, (i-1) * self.cols + j, 1] = 1.0
-                    if j < self.cols - 1:   # Right
+                    if i > 0:  # Up
+                        self.p_matrix[i * self.cols + j, 0, (i - 1) * self.cols + j, 1] = 1.0
+                    if j < self.cols - 1:  # Right
                         self.p_matrix[i * self.cols + j, 1, i * self.cols + j + 1, 1] = 1.0
-                    if i < self.rows - 1:   # Down
-                        self.p_matrix[i * self.cols + j, 2, (i+1) * self.cols + j, 1] = 1.0
-                    if j > 0:   # Left
+                    if i < self.rows - 1:  # Down
+                        self.p_matrix[i * self.cols + j, 2, (i + 1) * self.cols + j, 1] = 1.0
+                    if j > 0:  # Left
                         self.p_matrix[i * self.cols + j, 3, i * self.cols + j - 1, 1] = 1.0
 
         # Add terminal states and rewards
-        self.p_matrix[self.win_coords[0] * self.cols + self.win_coords[1], :, self.win_coords[0] * self.cols + self.win_coords[1], 2] = 1.0
-        self.p_matrix[self.loose_coords[0] * self.cols + self.loose_coords[1], :, self.loose_coords[0] * self.cols + self.loose_coords[1], 0] = 1.0
+        self.p_matrix[self.win_coords[0] * self.cols + self.win_coords[1], :,
+        self.win_coords[0] * self.cols + self.win_coords[1], 2] = 1.0
+        self.p_matrix[self.loose_coords[0] * self.cols + self.loose_coords[1], :,
+        self.loose_coords[0] * self.cols + self.loose_coords[1], 0] = 1.0
 
         print("Grid World object creation Done")
 
