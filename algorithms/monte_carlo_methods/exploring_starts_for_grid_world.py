@@ -1,13 +1,12 @@
 import numpy as np
 from drl_lib.do_not_touch.result_structures import PolicyAndActionValueFunction
 from drl_lib.do_not_touch.contracts import SingleAgentEnv
-from envs.grid_world_for_single_agent import GridWorldSAEnv
-from TicTacToe import TicTacToe
+from envs.grid_world_single_agent import GridWorldSAEnv
 
 
-def exploring_starts(environment: SingleAgentEnv,
-                     gamma: float = 0.99999,
-                     max_episodes_count: int = 1000) -> PolicyAndActionValueFunction:
+def exploring_starts_for_grid_world(environment: SingleAgentEnv,
+                                    gamma: float = 0.99999,
+                                    max_episodes_count: int = 1000) -> PolicyAndActionValueFunction:
     pi = {}
     q = {}
     returns = {}
@@ -52,9 +51,3 @@ def exploring_starts(environment: SingleAgentEnv,
                 pi[s_t] = list(q[s_t].keys())[np.argmax(list(q[s_t].values()))]
 
     return PolicyAndActionValueFunction(pi, q)
-
-
-import collections
-gw = GridWorldSAEnv(5, 5, 1000000, (4, 4), (0, 4))
-# t = TicTacToe()
-print(collections.OrderedDict(sorted(exploring_starts(gw, gamma=0.99, max_episodes_count=10000).pi.items())))

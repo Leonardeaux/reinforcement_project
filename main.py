@@ -3,8 +3,8 @@ from __future__ import absolute_import
 import numpy as np
 import drl_lib.to_do.dynamic_programming as dynamic_programming
 import drl_lib.to_do.monte_carlo_methods as monte_carlo_methods
-from envs.line_world_for_mdp import LineWorldEnv
-from envs.grid_world_for_mdp import GridWorldEnv
+from envs.line_world_mdp import LineWorldEnv
+from envs.grid_world_mdp import GridWorldEnv
 from algorithms.dynamic_programming.policy_evaluation import policy_evaluation
 from algorithms.dynamic_programming.policy_iteration import policy_iteration
 from algorithms.dynamic_programming.value_iteration import value_iteration

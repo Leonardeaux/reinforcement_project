@@ -1,12 +1,11 @@
-import numpy as np
 import random
 from collections import defaultdict
+import numpy as np
 from drl_lib.do_not_touch.result_structures import PolicyAndActionValueFunction
-from drl_lib.do_not_touch.single_agent_env_wrapper import Env2
-from TicTacToe import TicTacToe
+from envs.tic_tac_toe_single_agent import TicTacToeEnv
 
 
-def generate_state_action_pairs(env):
+def generate_state_action_pairs():
     def simulate_game(states, board, player):
         for action in range(9):  # 9 actions possible
             new_board = board.copy()
@@ -23,14 +22,15 @@ def generate_state_action_pairs(env):
     simulate_game(states, initial_board, 1)
     return states
 
-def monte_carlo_es_on_tic_tac_toe_solo(env: TicTacToe,
-                                           gamma: float = 0.999999,
-                                           max_episodes_count: int = 1000) -> PolicyAndActionValueFunction:
-    Q = defaultdict(lambda: defaultdict(lambda: 0))
-    Returns = defaultdict(lambda: defaultdict(lambda: []))
-    Policy = {}
 
-    all_state_action_pairs = generate_state_action_pairs(env)
+def exploring_starts_for_tic_tac_toe(env: TicTacToeEnv,
+                                     gamma: float = 0.999999,
+                                     max_episodes_count: int = 1000) -> PolicyAndActionValueFunction:
+    q = defaultdict(lambda: defaultdict(lambda: 0))
+    returns = defaultdict(lambda: defaultdict(lambda: []))
+    policy = {}
+
+    all_state_action_pairs = generate_state_action_pairs()
 
     for episode in range(max_episodes_count):
         start_state, start_action, _ = random.choice(all_state_action_pairs)
@@ -45,6 +45,8 @@ def monte_carlo_es_on_tic_tac_toe_solo(env: TicTacToe,
             env.act_with_action_id(start_action)
             reward = env.score()
 
+            G = gamma * G + reward
+
             episode_list.append((start_state, start_action, reward))
             start_state = env.state_id()
 
@@ -55,21 +57,16 @@ def monte_carlo_es_on_tic_tac_toe_solo(env: TicTacToe,
                 episode_list.append((start_state, start_action, 0))
 
         for s, a, _ in episode_list:
-            Returns[s][a].append(G)
-            Q[s][a] = np.average(Returns[s][a])
+            returns[s][a].append(G)
+            q[s][a] = np.average(returns[s][a])
             if len(env.action_space()) > 0:
-                Policy[s] = max(list(range(len(env.action_space()))), key=lambda x: Q[s][x])
+                policy[s] = max(list(range(len(env.action_space()))), key=lambda x: q[s][x])
             else:
                 if env.is_game_over():
                     winner = env.check_winner()
                     if winner:
-                        print("winner")
+                        env.score()
                     else:
-                        print("draw")
+                        env.score()
         episode_list = reversed(episode_list)
-    return Policy, Q
-
-
-env = TicTacToe()
-PolicyMC, Q = monte_carlo_es_on_tic_tac_toe_solo(env)
-print(PolicyMC)
+    return PolicyAndActionValueFunction(policy, q)

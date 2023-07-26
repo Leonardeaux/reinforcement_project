@@ -34,8 +34,6 @@ class GridWorldEnv(MDPEnv):
         self.p_matrix[self.loose_coords[0] * self.cols + self.loose_coords[1], :,
         self.loose_coords[0] * self.cols + self.loose_coords[1], 0] = 1.0
 
-        print("Grid World object creation Done")
-
     def states(self) -> np.ndarray:
         return self.S
 

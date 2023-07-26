@@ -2,8 +2,8 @@ import pygame
 from utils import get_triangle_points, get_cell_center
 from typing import Tuple
 from drl_lib.do_not_touch.contracts import MDPEnv
-from envs.grid_world_for_mdp import GridWorldEnv
-from envs.line_world_for_mdp import LineWorldEnv
+from envs.grid_world_mdp import GridWorldEnv
+from envs.line_world_mdp import LineWorldEnv
 from algorithms.dynamic_programming.policy_iteration import policy_iteration
 from algorithms.dynamic_programming.value_iteration import value_iteration
 from drl_lib.do_not_touch.result_structures import PolicyAndValueFunction
@@ -145,11 +145,7 @@ def launch_visualize_mdp(environment: MDPEnv,
 
 if __name__ == "__main__":
     grid_world = GridWorldEnv(5, 5, (4, 4), (0, 4))
-    line_world = LineWorldEnv(7)
     pavf = value_iteration(grid_world, gamma=0.99, theta=0.01)
-    # pavf = policy_iteration(line_world, gamma=0.99, theta=0.01)
-    # visualize_mdp(line_world, 1, line_world.cells_nb, (0, 6), (0, 0), pavf)
-
     launch_visualize_mdp(grid_world,
                          grid_world.rows,
                          grid_world.cols,
